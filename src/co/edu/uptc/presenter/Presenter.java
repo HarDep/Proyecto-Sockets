@@ -51,4 +51,9 @@ public class Presenter implements Contract.Presenter {
         else
             modelClient.terminate();
     }
+
+    @Override
+    public void notifyWarning(String value) {
+        view.notifyWarning(value);
+    }
 }

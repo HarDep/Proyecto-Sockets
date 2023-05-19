@@ -43,7 +43,7 @@ public class Client {
                     }
                 } catch (IOException e) {
                     //throw new RuntimeException(e);
-                    System.out.println("desconectado");
+                    client.presenter.notifyWarning("Se ha desconectado el servidor");
                 }
             }
         };

@@ -32,15 +32,18 @@ public class Server {
         conection.connect();
     }
     public void send(){
-        synchronized (sockets){
-            for (Socket socket:sockets) {
-                try {
-                    DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-                    dataOutputStream.writeUTF(new Gson().toJson(server.getSquare()));
-                } catch (IOException e) {
-                    sockets.remove(socket);
-                    isRemoved = true;
-                    break;
+        if (!sockets.isEmpty()){
+            String info =new Gson().toJson(server.getSquare());
+            synchronized (sockets){
+                for (Socket socket:sockets) {
+                    try {
+                        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                        dataOutputStream.writeUTF(info);
+                    } catch (IOException e) {
+                        sockets.remove(socket);
+                        isRemoved = true;
+                        break;
+                    }
                 }
             }
         }

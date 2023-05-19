@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 proyecto sockets.iml
+Proyecto-Sockets.iml
 .idea
 
 ### Eclipse ###

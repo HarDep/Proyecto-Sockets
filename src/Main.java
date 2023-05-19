@@ -5,5 +5,7 @@ public class Main {
         System.out.println("Hello world!");
         Demo demo = new Demo(true);
         demo.start();
+        Demo demo2 = new Demo(false);
+        demo2.start();
     }
 }

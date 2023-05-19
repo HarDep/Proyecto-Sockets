@@ -45,4 +45,9 @@ public class DashBoard extends JFrame implements Contract.View {
     public void paintRectangle() {
         rectanglePanel.repaint();
     }
+
+    @Override
+    public void notifyWarning(String value) {
+        JOptionPane.showMessageDialog(this,value,"Demo",JOptionPane.WARNING_MESSAGE);
+    }
 }

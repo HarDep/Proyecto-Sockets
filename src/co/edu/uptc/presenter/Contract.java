@@ -25,10 +25,12 @@ public interface Contract {
         void paintRectangle();
         void start();
         void terminate();
+        void notifyWarning(String value);
     }
     interface View{
         void setPresenter(Contract.Presenter presenter);
         void start();
         void paintRectangle();
+        void notifyWarning(String value);
     }
 }
