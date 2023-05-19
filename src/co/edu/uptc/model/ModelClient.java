@@ -13,7 +13,9 @@ public class ModelClient implements Contract.ModelClient {
     public ModelClient() {
         this.rectangle = new Rectangle(0,0,100,100);
         //client = new Client("10.4.44.43",1234,this);
-        client = new Client("10.4.65.123",1234,this);
+        //client = new Client("10.4.65.132",1234,this);
+        client = new Client("10.4.74.41",9021,this);
+        //client = new Client("10.4.73.177",1234,this);
     }
 
     @Override

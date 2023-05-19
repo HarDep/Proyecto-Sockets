@@ -12,7 +12,7 @@ public class ModelServer implements Contract.ModelServer {
 
     public ModelServer() {
         rectangle = new Rectangle(0,0,100,100);
-        server = new Server("10.4.65.123",1234,this);
+        server = new Server("10.4.65.132",1234,this);
     }
 
     @Override

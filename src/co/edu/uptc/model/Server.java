@@ -59,7 +59,6 @@ public class Server {
                         synchronized (sockets) {
                             sockets.add(socket);
                         }
-                        sleep(300);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
