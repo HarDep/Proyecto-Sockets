@@ -41,7 +41,7 @@ public class Server {
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {
-                        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                        dataOutputStream = new DataOutputStream(socket.getOutputStream());
                         dataOutputStream.writeUTF(info);
                     } catch (IOException e) {
                         sockets.remove(socket);
