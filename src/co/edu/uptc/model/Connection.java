@@ -1,31 +1,24 @@
 package co.edu.uptc.model;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Conection {
+public class Connection {
     protected ServerSocket serverSocket;
     protected Socket socket;
     private String type;
     private String host;
     private int port;
 
-    public void connect(){
+    public void connect() throws IOException {
         switch (type){
             case "server" -> {
-                try {
-                    serverSocket = new ServerSocket(port);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                serverSocket = new ServerSocket(port);
             }
             case "client" -> {
-                try {
-                    socket = new Socket(host,port);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                socket = new Socket(host,port);
             }
         }
     }

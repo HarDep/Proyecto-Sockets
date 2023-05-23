@@ -42,6 +42,10 @@ public class Presenter implements Contract.Presenter {
     @Override
     public void start() {
         view.start();
+        if (modelServer != null)
+            modelServer.start();
+        else
+            modelClient.start();
     }
 
     @Override

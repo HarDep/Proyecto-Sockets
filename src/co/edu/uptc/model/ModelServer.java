@@ -8,11 +8,10 @@ public class ModelServer implements Contract.ModelServer {
     Contract.Presenter presenter;
     private final Rectangle rectangle;
     boolean isRunning = true;
-    private final Server server;
+    private Server server;
 
     public ModelServer() {
         rectangle = new Rectangle(0,0,100,100);
-        server = new Server("10.4.65.132",1234,this);
     }
 
     @Override
@@ -34,5 +33,10 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void terminate() {
         isRunning = false;
+    }
+
+    @Override
+    public void start() {
+        server = new Server("",1234,this);
     }
 }

@@ -7,15 +7,11 @@ import java.awt.*;
 public class ModelClient implements Contract.ModelClient {
     Contract.Presenter presenter;
     private Rectangle rectangle;
-    private final Client client;
+    private Client client;
     boolean isRunning = true;
 
     public ModelClient() {
         this.rectangle = new Rectangle(0,0,100,100);
-        //client = new Client("10.4.44.43",1234,this);
-        client = new Client("192.168.1.8",1234,this);
-        //client = new Client("10.4.74.41",9021,this);
-        //client = new Client("10.4.73.177",1234,this);
     }
 
     @Override
@@ -42,5 +38,13 @@ public class ModelClient implements Contract.ModelClient {
     @Override
     public void terminate() {
         isRunning = false;
+    }
+
+    @Override
+    public void start() {
+        //client = new Client("10.4.44.43",1234,this);
+        client = new Client("192.168.1.4",1234,this);
+        //client = new Client("10.4.74.41",9021,this);
+        //client = new Client("10.4.73.177",1234,this);
     }
 }

@@ -8,6 +8,7 @@ public interface Contract {
         void moveSquare(int x,int y);
         Rectangle getSquare();
         void terminate();
+        void start();
     }
     interface ModelClient{
         void setPresenter(Contract.Presenter presenter);
@@ -15,6 +16,7 @@ public interface Contract {
         void setRectangle(Rectangle rectangle);
         void paintRectangle();
         void terminate();
+        void start();
     }
     interface Presenter{
         void setView(Contract.View view);

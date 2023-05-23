@@ -10,30 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    private Conection conection;
+    private Connection connection;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
-    ModelServer server;
+    ModelServer model;
     private final List<Socket> sockets;
     private boolean isRemoved = false;
 
-    public Server(String host, int port, ModelServer server) {
-        this.server = server;
+    public Server(String host, int port, ModelServer model) {
+        this.model = model;
         this.sockets = new ArrayList<>();
         innit(host, port);
         connect();
     }
 
     public void innit(String host, int port){
-        conection = new Conection();
-        conection.setType("server");
-        conection.setPort(port);
-        conection.setHost(host);
-        conection.connect();
+        connection = new Connection();
+        connection.setType("server");
+        connection.setPort(port);
+        connection.setHost(host);
+        try {
+            connection.connect();
+        } catch (IOException e) {
+            model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+        }
     }
     public void send(){
         if (!sockets.isEmpty()){
-            String info =new Gson().toJson(server.getSquare());
+            String info =new Gson().toJson(model.getSquare());
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {
@@ -56,14 +60,14 @@ public class Server {
         Thread thread = new Thread(){
             @Override
             public void run() {
-                while (server.isRunning){
+                while (model.isRunning){
                     try {
-                        Socket socket = conection.serverSocket.accept();
+                        Socket socket = connection.serverSocket.accept();
                         synchronized (sockets) {
                             sockets.add(socket);
                         }
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
                     }
                 }
             }

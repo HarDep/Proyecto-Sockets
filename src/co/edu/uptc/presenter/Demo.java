@@ -11,16 +11,17 @@ public class Demo {
     private final Contract.View view;
 
     public Demo(boolean isServer) {
-        if (isServer)
+        if (isServer){
             modelServer = new ModelServer();
-        else
-            modelClient = new ModelClient();
-        presenter = new Presenter();
-        view = new DashBoard();
-        if (isServer)
+            presenter = new Presenter();
+            view = new DashBoard();
             createServerMVP();
-        else
+        }else{
+            modelClient = new ModelClient();
+            presenter = new Presenter();
+            view = new DashBoard();
             createClientMVP();
+        }
     }
 
     private void createClientMVP() {
@@ -28,12 +29,14 @@ public class Demo {
         presenter.setModelClient(modelClient);
         presenter.setView(view);
         view.setPresenter(presenter);
+        view.paintRectangle();
     }
     private void createServerMVP() {
         modelServer.setPresenter(presenter);
         presenter.setModelServer(modelServer);
         presenter.setView(view);
         view.setPresenter(presenter);
+        view.paintRectangle();
     }
 
     public void start(){
