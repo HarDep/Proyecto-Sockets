@@ -33,26 +33,30 @@ public class Client {
         Thread thread = new Thread(){
             @Override
             public void run() {
-                try {
-                    String info;
-                    while (model.isRunning){
-                        dataInputStream = new DataInputStream(connection.socket.getInputStream());
-                        info = dataInputStream.readUTF();
-                        Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
-                        model.setRectangle(rectangle);
-                        model.paintRectangle();
-                    }
-                } catch (SocketException e) {
-                    model.presenter.notifyWarning("Se ha desconectado el servidor");
-                    connection.socket = null;
-                    connect();
-                    receive();
-                } catch (IOException e) {
-                    model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+                while (model.isRunning) {
+                    getInfo();
                 }
             }
         };
         thread.start();
+    }
+
+    private void getInfo(){
+        try {
+            String info;
+            dataInputStream = new DataInputStream(connection.socket.getInputStream());
+            info = dataInputStream.readUTF();
+            Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
+            model.setRectangle(rectangle);
+            model.paintRectangle();
+        } catch (SocketException e) {
+            model.presenter.notifyWarning("Se ha desconectado el servidor");
+            connection.socket = null;
+            connect();
+            getInfo();
+        } catch (IOException e) {
+            model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+        }
     }
 
     private void connect(){
@@ -62,11 +66,6 @@ public class Client {
             } catch (ConnectException e){
                 model.presenter.notifyWarning("No se pudo conectar al sevidor");
             } catch (IOException e) {
-                model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
-            }
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
                 model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
             }
         }
