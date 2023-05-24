@@ -1,5 +1,8 @@
 package co.edu.uptc.presenter;
 
+import co.edu.uptc.pojos.FigureInformation;
+import co.edu.uptc.pojos.Info;
+
 import java.awt.*;
 
 public class Presenter implements Contract.Presenter {
@@ -32,6 +35,11 @@ public class Presenter implements Contract.Presenter {
         if (modelServer != null)
             return modelServer.getSquare();
         return modelClient.getSquare();
+    }
+
+    @Override
+    public Info getInformation() {
+        return modelClient.getInformation();
     }
 
     @Override

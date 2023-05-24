@@ -1,5 +1,7 @@
 package co.edu.uptc.model;
 
+import co.edu.uptc.pojos.FigureInformation;
+import co.edu.uptc.pojos.Info;
 import com.google.gson.Gson;
 
 import java.awt.*;
@@ -39,6 +41,8 @@ public class Client {
             }
         };
         thread.start();
+        //System.out.println(thread.getPriority());
+        //thread.setPriority(6);
     }
 
     private void getInfo(){
@@ -46,8 +50,12 @@ public class Client {
             String info;
             dataInputStream = new DataInputStream(connection.socket.getInputStream());
             info = dataInputStream.readUTF();
-            Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
-            model.setRectangle(rectangle);
+            //Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
+            //FigureInformation figureInformation = new Gson().fromJson(info, FigureInformation.class);
+            //System.out.println(figureInformation);
+            Info inf = new Gson().fromJson(info, Info.class);
+            //model.setRectangle(rectangle);
+            model.setInformation(inf);
             model.paintRectangle();
         } catch (SocketException e) {
             model.presenter.notifyWarning("Se ha desconectado el servidor");

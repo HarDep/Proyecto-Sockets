@@ -73,5 +73,8 @@ public class Server {
             }
         };
         thread.start();
+        //thread.setPriority(Thread.MAX_PRIORITY);
+        //System.out.println(thread.getPriority());
+        //thread.setPriority(6);
     }
 }
