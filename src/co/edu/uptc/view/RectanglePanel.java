@@ -27,12 +27,13 @@ public class RectanglePanel extends JPanel {
         graphics2D.setColor(Color.RED);
         if (dashBoard.presenter != null) {
             rectangle = dashBoard.presenter.getSquare();
-            /*if () {
-                info = dashBoard.presenter.getInformation();
-                setBackground(new Color(info.getPanelInformation().getColor()));
-                graphics2D.setColor(new Color(info.getFigureInformation().getColor()));
-                graphics2D.draw(info.getFigureInformation().getRectangle());
-            }*/
+            graphics2D.draw(rectangle);
+            /*
+            info = dashBoard.presenter.getInformation();
+            setBackground(new Color(info.getPanelInformation().getColor()));
+            graphics2D.setColor(new Color(info.getFigureInformation().getColor()));
+            graphics2D.draw(info.getFigureInformation().getRectangle());
+            */
         }
     }
 

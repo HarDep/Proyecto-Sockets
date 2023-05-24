@@ -58,10 +58,6 @@ public class ModelClient implements Contract.ModelClient {
 
     @Override
     public void start() {
-        //client = new Client("10.4.44.43",1234,this);
-        //client = new Client("10.4.65.132",1234,this);
-        //client = new Client("10.4.74.41",9021,this);
-        //client = new Client("10.4.73.177",1234,this);
-        client = new Client("10.4.72.75",1234,this);
+        client = new Client("192.168.1.8",1234,this);
     }
 }
