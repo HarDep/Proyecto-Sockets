@@ -43,7 +43,7 @@ public class ModelClient implements Contract.ModelClient {
     @Override
     public void start() {
         //client = new Client("10.4.44.43",1234,this);
-        client = new Client("192.168.1.4",1234,this);
+        client = new Client("127.0.0.1",1234,this);
         //client = new Client("10.4.74.41",9021,this);
         //client = new Client("10.4.73.177",1234,this);
     }

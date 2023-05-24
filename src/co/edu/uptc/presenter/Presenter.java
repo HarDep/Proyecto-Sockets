@@ -1,6 +1,7 @@
 package co.edu.uptc.presenter;
 
 import java.awt.*;
+import java.io.File;
 
 public class Presenter implements Contract.Presenter {
     private Contract.ModelServer modelServer;
@@ -54,6 +55,11 @@ public class Presenter implements Contract.Presenter {
             modelServer.terminate();
         else
             modelClient.terminate();
+    }
+
+    @Override
+    public void sendFile(File file) {
+        modelServer.sendFile(file);
     }
 
     @Override

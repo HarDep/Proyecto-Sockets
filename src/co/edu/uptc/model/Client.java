@@ -3,9 +3,7 @@ package co.edu.uptc.model;
 import com.google.gson.Gson;
 
 import java.awt.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.SocketException;
 
@@ -34,7 +32,8 @@ public class Client {
             @Override
             public void run() {
                 while (model.isRunning) {
-                    getInfo();
+                    //getInfo();
+                    getFile();
                 }
             }
         };
@@ -49,6 +48,33 @@ public class Client {
             Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
             model.setRectangle(rectangle);
             model.paintRectangle();
+        } catch (SocketException e) {
+            model.presenter.notifyWarning("Se ha desconectado el servidor");
+            connection.socket = null;
+            connect();
+            getInfo();
+        } catch (IOException e) {
+            model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+        }
+    }
+
+    public void getFile(){
+        try {
+            DataInputStream dis=new DataInputStream(connection.socket.getInputStream());
+            String file = dis.readUTF();
+            if (!new File(file).exists()){
+                byte[] receivedData = new byte[1024];
+                BufferedInputStream bis = new BufferedInputStream(connection.socket.getInputStream());
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                int in;
+                while ((in = bis.read(receivedData)) != -1){
+                    bos.write(receivedData,0,in);
+                }
+                bos.close();
+                bis.close();
+            } else
+                model.presenter.notifyWarning("El archivo ya se ha enviado");
+            dis.close();
         } catch (SocketException e) {
             model.presenter.notifyWarning("Se ha desconectado el servidor");
             connection.socket = null;

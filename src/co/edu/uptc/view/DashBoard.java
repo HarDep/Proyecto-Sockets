@@ -8,17 +8,29 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class DashBoard extends JFrame implements Contract.View {
-    private final RectanglePanel rectanglePanel;
+    private RectanglePanel rectanglePanel;
     Contract.Presenter presenter;
+    boolean isServer;
 
-    public DashBoard() {
+    public DashBoard(boolean isServer) {
+        this.isServer = isServer;
         putConfigs();
+        createComponents();
+    }
+
+    private void createComponents() {
         rectanglePanel = new RectanglePanel(this);
-        add(rectanglePanel);
+        if (isServer){
+            add(rectanglePanel, BorderLayout.CENTER);
+            SelectionPanel selectionPanel = new SelectionPanel(this);
+            add(selectionPanel,BorderLayout.WEST);
+        }else
+            add(rectanglePanel);
     }
 
     private void putConfigs() {
         setTitle("Demo");
+        setLayout(new BorderLayout());
         setSize(new Dimension(700,700));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

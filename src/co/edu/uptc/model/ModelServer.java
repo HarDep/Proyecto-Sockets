@@ -3,6 +3,7 @@ package co.edu.uptc.model;
 import co.edu.uptc.presenter.Contract;
 
 import java.awt.*;
+import java.io.File;
 
 public class ModelServer implements Contract.ModelServer {
     Contract.Presenter presenter;
@@ -22,7 +23,7 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void moveSquare(int x, int y) {
         rectangle.setLocation(x,y);
-        server.send();
+        //server.send();
     }
 
     @Override
@@ -33,6 +34,11 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void terminate() {
         isRunning = false;
+    }
+
+    @Override
+    public void sendFile(File file) {
+        server.sendFile(file);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package co.edu.uptc.presenter;
 
 import java.awt.*;
+import java.io.File;
 
 public interface Contract {
     interface ModelServer {
@@ -8,6 +9,7 @@ public interface Contract {
         void moveSquare(int x,int y);
         Rectangle getSquare();
         void terminate();
+        void sendFile(File file);
         void start();
     }
     interface ModelClient{
@@ -27,6 +29,7 @@ public interface Contract {
         void paintRectangle();
         void start();
         void terminate();
+        void sendFile(File file);
         void notifyWarning(String value);
     }
     interface View{
