@@ -39,7 +39,11 @@ public class Presenter implements Contract.Presenter {
 
     @Override
     public Info getInformation() {
-        return modelClient.getInformation();
+        if (modelServer!=null)
+            return modelServer.getInformation();
+        else if (modelClient != null)
+            return modelClient.getInformation();
+        return null;
     }
 
     @Override

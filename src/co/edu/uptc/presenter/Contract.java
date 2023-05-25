@@ -10,6 +10,7 @@ public interface Contract {
         void setPresenter(Contract.Presenter presenter);
         void moveSquare(int x,int y);
         Rectangle getSquare();
+        Info getInformation();
         void terminate();
         void start();
     }

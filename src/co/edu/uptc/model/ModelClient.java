@@ -15,9 +15,11 @@ public class ModelClient implements Contract.ModelClient {
     boolean isRunning = true;
 
     public ModelClient() {
-        this.rectangle = new Rectangle(0,0,100,100);
-        this.info = new Info(new FigureInformation(new Rectangle(0,0,100,100),255)
+        this.rectangle = new Rectangle(0,0,60,60);
+        this.info = new Info(new FigureInformation(rectangle,255)
                 ,new PanelInformation(0));
+        //this.info = new Info(new FigureInformation(604391976,255)
+          //      ,new PanelInformation(0));
     }
 
     @Override
@@ -58,6 +60,7 @@ public class ModelClient implements Contract.ModelClient {
 
     @Override
     public void start() {
-        client = new Client("192.168.1.8",1234,this);
+        //client = new Client("10.4.74.189",1234,this);
+        client = new Client("192.168.1.14",1234,this);
     }
 }

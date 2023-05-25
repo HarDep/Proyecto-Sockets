@@ -1,7 +1,11 @@
 package co.edu.uptc.model;
 
+import co.edu.uptc.pojos.FigureInformation2;
+import co.edu.uptc.pojos.Info;
+import co.edu.uptc.pojos.Info2;
 import com.google.gson.Gson;
 
+import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -37,7 +41,18 @@ public class Server {
     }
     public void send(){
         if (!sockets.isEmpty()){
-            String info =new Gson().toJson(model.getSquare());
+            Info inf = model.getInformation();
+            Rectangle rectangle = inf.getFigureInformation().getRectangle();
+            int x = rectangle.x << 22;
+            int y = rectangle.y << 12;
+            int w = rectangle.width << 6;
+            //System.out.println(Integer.toBinaryString(w) + "orr");
+            int h = rectangle.height;
+            //System.out.println(Integer.toBinaryString(h));
+            int num = x + y + w + h;
+            //System.out.println(Integer.toBinaryString(num) + "--ori");
+            String info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
+                    inf.getPanelInformation()));
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {

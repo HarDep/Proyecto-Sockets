@@ -2,6 +2,7 @@ package co.edu.uptc.model;
 
 import co.edu.uptc.pojos.FigureInformation;
 import co.edu.uptc.pojos.Info;
+import co.edu.uptc.pojos.Info2;
 import com.google.gson.Gson;
 
 import java.awt.*;
@@ -50,12 +51,32 @@ public class Client {
             String info;
             dataInputStream = new DataInputStream(connection.socket.getInputStream());
             info = dataInputStream.readUTF();
+            //System.out.println(info);
             //Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
             //FigureInformation figureInformation = new Gson().fromJson(info, FigureInformation.class);
             //System.out.println(figureInformation);
-            Info inf = new Gson().fromJson(info, Info.class);
+            Info2 inf = new Gson().fromJson(info, Info2.class);
             //model.setRectangle(rectangle);
-            model.setInformation(inf);
+
+            int num = inf.getFigureInformation().getRectangle();
+
+            int x = num >>> 22;
+
+            int y = (num >>> 12) - (x << 10);
+
+            int w = (num >>> 6) - ((num >>> 12) << 6);
+
+            int h = num - ((num >>> 6) << 6);
+
+
+            //System.out.println(Integer.toBinaryString(num) + "--bef");
+            //System.out.println(Integer.toBinaryString(x));
+            //System.out.println(Integer.toBinaryString(y));
+            //System.out.println(Integer.toBinaryString(w)+ "dest");
+            //System.out.println(Integer.toBinaryString(h));
+
+            model.setInformation(new Info(new FigureInformation(new Rectangle(x,y,w,h),
+                    inf.getFigureInformation().getColor()),inf.getPanelInformation()));
             model.paintRectangle();
         } catch (SocketException e) {
             model.presenter.notifyWarning("Se ha desconectado el servidor");
