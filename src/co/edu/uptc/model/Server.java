@@ -57,7 +57,6 @@ public class Server {
 
     public void sendFile(File file){
         if (!sockets.isEmpty()){
-            String info =new Gson().toJson(model.getSquare());
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {
@@ -65,14 +64,27 @@ public class Server {
                         BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
                         DataOutputStream dos=new DataOutputStream(socket.getOutputStream());
                         dos.writeUTF(file.getName());
-                        bis.transferTo(bos);
+                        long a = bis.transferTo(bos);
+                        System.out.println(a);
                         /*int in;
                         byte[] byteArray = new byte[8192];
                         while ((in = bis.read(byteArray)) != -1){
                             bos.write(byteArray,0,in);
                         }*/
-                        bis.close();
-                        bos.close();
+                        System.out.println(socket.isClosed());
+
+                        //bis.close();
+                        System.out.println(socket.isClosed());
+
+
+
+                        bos.flush();
+                        byte [] d={-1};
+                        //fin de archivo
+                        bos.write(d,0,1);
+                        bos.flush();
+
+                        System.out.println(socket.isClosed());
                     } catch (IOException e) {
                         sockets.remove(socket);
                         isRemoved = true;
