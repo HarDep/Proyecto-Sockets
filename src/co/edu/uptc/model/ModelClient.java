@@ -3,6 +3,8 @@ package co.edu.uptc.model;
 import co.edu.uptc.presenter.Contract;
 
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ModelClient implements Contract.ModelClient {
     Contract.Presenter presenter;
@@ -42,9 +44,13 @@ public class ModelClient implements Contract.ModelClient {
 
     @Override
     public void start() {
-        //client = new Client("10.4.44.43",1234,this);
-        client = new Client("127.0.0.1",1234,this);
-        //client = new Client("10.4.74.41",9021,this);
-        //client = new Client("10.4.73.177",1234,this);
+        String ip;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            System.err.print("error en local host");
+            throw new RuntimeException(e);
+        }
+        client = new Client(ip,1234,this);
     }
 }
