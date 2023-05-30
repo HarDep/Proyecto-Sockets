@@ -57,40 +57,45 @@ public class Server {
 
     public void sendFile(File file){
         if (!sockets.isEmpty()){
-            synchronized (sockets){
-                for (Socket socket:sockets) {
-                    try {
-                        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-                        BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
-                        DataOutputStream dos=new DataOutputStream(socket.getOutputStream());
-                        dos.writeUTF(file.getName());
-                        long a = bis.transferTo(bos);
-                        System.out.println(a);
-                        /*int in;
-                        byte[] byteArray = new byte[8192];
-                        while ((in = bis.read(byteArray)) != -1){
-                            bos.write(byteArray,0,in);
-                        }*/
-                        System.out.println(socket.isClosed());
+            try {
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+                byte[] data = bis.readAllBytes();
+                bis.close();
+                System.out.println(data.length);
+                synchronized (sockets) {
+                    for (Socket socket : sockets) {
+                        try {
+                            BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
+                            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                            dos.writeUTF(file.getName());
+                            bos.write(data);
+                            /*int in;
+                            byte[] byteArray = new byte[8192];
+                            while ((in = bis.read(byteArray)) != -1){
+                                bos.write(byteArray,0,in);
+                            }*/
+                            System.out.println(socket.isClosed());
 
-                        //bis.close();
-                        System.out.println(socket.isClosed());
+                            //bis.close();
+                            System.out.println(socket.isClosed());
 
 
+                            /*bos.flush();
+                            byte[] d = {-1};
+                            //fin de archivo
+                            bos.write(d, 0, 1);
+                            bos.flush();*/
 
-                        bos.flush();
-                        byte [] d={-1};
-                        //fin de archivo
-                        bos.write(d,0,1);
-                        bos.flush();
-
-                        System.out.println(socket.isClosed());
-                    } catch (IOException e) {
-                        sockets.remove(socket);
-                        isRemoved = true;
-                        break;
+                            System.out.println(socket.isClosed());
+                        } catch (IOException e) {
+                            sockets.remove(socket);
+                            isRemoved = true;
+                            break;
+                        }
                     }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         if (isRemoved){

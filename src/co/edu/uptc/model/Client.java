@@ -71,14 +71,14 @@ public class Client {
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
                 int in;
                 while (true){
-                        in = bis.read(receivedData);
-                   // System.out.println("1: "+in);
+                    in = bis.read(receivedData);
+                    System.out.println("1: "+in);
                         if (in==-1) break;
                     bos.write(receivedData,0,in);
-                  //  System.out.println("55555");
+                    //System.out.println("55555");
                 }
                 bos.close();
-                bis.close();
+                //bis.close();
                 System.out.println("ya");
             } else
                 model.presenter.notifyWarning("El archivo ya se ha enviado");
