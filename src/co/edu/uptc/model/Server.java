@@ -68,6 +68,7 @@ public class Server {
                             BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
                             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                             dos.writeUTF(file.getName());
+                            dos.writeUTF(String.valueOf(data.length));
                             bos.write(data);
                             /*int in;
                             byte[] byteArray = new byte[8192];

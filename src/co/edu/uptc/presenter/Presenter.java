@@ -66,4 +66,14 @@ public class Presenter implements Contract.Presenter {
     public void notifyWarning(String value) {
         view.notifyWarning(value);
     }
+
+    @Override
+    public void notifyMessage(String value) {
+        view.notifyMessage(value);
+    }
+
+    @Override
+    public boolean notifySelection(String value) {
+        return view.notifySelection(value);
+    }
 }

@@ -31,11 +31,15 @@ public interface Contract {
         void terminate();
         void sendFile(File file);
         void notifyWarning(String value);
+        void notifyMessage(String value);
+        boolean notifySelection(String value);
     }
     interface View{
         void setPresenter(Contract.Presenter presenter);
         void start();
         void paintRectangle();
         void notifyWarning(String value);
+        void notifyMessage(String value);
+        boolean notifySelection(String value);
     }
 }

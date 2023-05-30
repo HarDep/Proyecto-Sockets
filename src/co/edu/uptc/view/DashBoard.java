@@ -62,4 +62,15 @@ public class DashBoard extends JFrame implements Contract.View {
     public void notifyWarning(String value) {
         JOptionPane.showMessageDialog(this,value,"Demo",JOptionPane.WARNING_MESSAGE);
     }
+
+    @Override
+    public void notifyMessage(String value) {
+        JOptionPane.showMessageDialog(this,value);
+    }
+
+    @Override
+    public boolean notifySelection(String value) {
+        return JOptionPane.showConfirmDialog(this,value,"",JOptionPane.YES_NO_OPTION)
+                == JOptionPane.YES_OPTION;
+    }
 }

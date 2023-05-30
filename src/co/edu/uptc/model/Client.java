@@ -52,7 +52,6 @@ public class Client {
             model.presenter.notifyWarning("Se ha desconectado el servidor");
             connection.socket = null;
             connect();
-            getInfo();
         } catch (IOException e) {
             model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
         }
@@ -60,28 +59,30 @@ public class Client {
 
     public void getFile(){
         try {
-            System.out.println("111111");
             DataInputStream dis=new DataInputStream(connection.socket.getInputStream());
-            System.out.println("2222");
-            String file = dis.readUTF();
-            File file1 = new File(file);
-            if (!file1.exists()){
+            String fileName = dis.readUTF();
+            boolean writeFile = !new File(fileName).exists();
+            if (!writeFile)
+                writeFile = model.presenter.notifySelection("El archivo ya ha sido enviado antes," +
+                        " ¿desea sobreescribir el archivo?");
+            if (writeFile){
+                int length = Integer.parseInt(dis.readUTF());
                 byte[] receivedData = new byte[1024];
                 BufferedInputStream bis = new BufferedInputStream(connection.socket.getInputStream());
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(fileName));
+                int count = 0;
                 int in;
                 while (true){
                     in = bis.read(receivedData);
-                    System.out.println("1: "+in);
-                        if (in==-1) break;
                     bos.write(receivedData,0,in);
+                    count += in;
+                    System.out.println("1: "+in);
+                    if (count == length) break;
                     //System.out.println("55555");
                 }
                 bos.close();
-                //bis.close();
-                System.out.println("ya");
-            } else
-                model.presenter.notifyWarning("El archivo ya se ha enviado");
+                model.presenter.notifyMessage("El archivo ha sido guardado");
+            }
         } catch (SocketException e) {
             model.presenter.notifyWarning("Se ha desconectado el servidor");
             connection.socket = null;
