@@ -63,8 +63,8 @@ public class Client {
             String fileName = dis.readUTF();
             boolean writeFile = !new File(fileName).exists();
             if (!writeFile)
-                writeFile = model.presenter.notifySelection("El archivo ya ha sido enviado antes," +
-                        " ¿desea sobreescribir el archivo?");
+                writeFile = model.presenter.notifySelection("El archivo " + fileName +  " ya ha sido" +
+                        " enviado antes, ¿desea sobreescribirlo?");
             if (writeFile){
                 int length = Integer.parseInt(dis.readUTF());
                 byte[] receivedData = new byte[1024];
@@ -81,7 +81,7 @@ public class Client {
                     //System.out.println("55555");
                 }
                 bos.close();
-                model.presenter.notifyMessage("El archivo ha sido guardado");
+                model.presenter.notifyMessage("El archivo " + fileName + " ha sido guardado");
             }
         } catch (SocketException e) {
             model.presenter.notifyWarning("Se ha desconectado el servidor");
