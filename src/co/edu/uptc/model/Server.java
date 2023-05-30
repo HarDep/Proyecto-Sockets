@@ -67,7 +67,7 @@ public class Server {
                             sockets.add(socket);
                         }
                     } catch (Exception e) {
-                        model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             }

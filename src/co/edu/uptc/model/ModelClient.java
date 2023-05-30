@@ -6,6 +6,8 @@ import co.edu.uptc.pojos.PanelInformation;
 import co.edu.uptc.presenter.Contract;
 
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ModelClient implements Contract.ModelClient {
     Contract.Presenter presenter;
@@ -16,7 +18,7 @@ public class ModelClient implements Contract.ModelClient {
 
     public ModelClient() {
         this.rectangle = new Rectangle(0,0,100,100);
-        this.info = new Info(new FigureInformation(new Rectangle(0,0,100,100),255)
+        this.info = new Info(new FigureInformation(rectangle,255)
                 ,new PanelInformation(0));
     }
 
@@ -58,6 +60,13 @@ public class ModelClient implements Contract.ModelClient {
 
     @Override
     public void start() {
-        client = new Client("192.168.1.8",1234,this);
+        String ip;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            System.err.print("error en local host");
+            throw new RuntimeException(e);
+        }
+        client = new Client(ip,1234,this);
     }
 }

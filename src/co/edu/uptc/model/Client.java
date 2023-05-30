@@ -50,12 +50,12 @@ public class Client {
             String info;
             dataInputStream = new DataInputStream(connection.socket.getInputStream());
             info = dataInputStream.readUTF();
-            //Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
+            Rectangle rectangle = new Gson().fromJson(info, Rectangle.class);
             //FigureInformation figureInformation = new Gson().fromJson(info, FigureInformation.class);
             //System.out.println(figureInformation);
-            Info inf = new Gson().fromJson(info, Info.class);
-            //model.setRectangle(rectangle);
-            model.setInformation(inf);
+            //Info inf = new Gson().fromJson(info, Info.class);
+            model.setRectangle(rectangle);
+            //model.setInformation(inf);
             model.paintRectangle();
         } catch (SocketException e) {
             model.presenter.notifyWarning("Se ha desconectado el servidor");
@@ -63,7 +63,7 @@ public class Client {
             connect();
             getInfo();
         } catch (IOException e) {
-            model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
