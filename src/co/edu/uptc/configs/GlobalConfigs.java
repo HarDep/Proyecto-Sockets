@@ -20,5 +20,6 @@ public class GlobalConfigs {
     public static final int START_FILE = 1;
     public static final int KEEP_FILE = 2;
     public static final int END_FILE = 3;
+    public static final int ALL_FILE = 4;
     public static final int BUFFER_SIZE = 1024;
 }

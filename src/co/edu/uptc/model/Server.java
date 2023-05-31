@@ -63,6 +63,7 @@ public class Server {
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {
+                        System.out.println(info);
                         dataOutputStream = new DataOutputStream(socket.getOutputStream());
                         dataOutputStream.writeUTF(info);
                     } catch (IOException e) {
@@ -85,6 +86,7 @@ public class Server {
                     Socket socket = connection.serverSocket.accept();
                     synchronized (sockets) {
                         sockets.add(socket);
+                        System.out.println(sockets.size());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -97,13 +99,18 @@ public class Server {
     public void sendFile(File file){
         try {
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-            int count = 0;
             int length = (int) file.length();
-            byte[] byteArray = new byte[GlobalConfigs.BUFFER_SIZE];
-            while (count != length) {
-                count += bis.read(byteArray);
-                putFile(file.getName(),byteArray, ( count == GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.START_FILE :
-                        ( count == length ? GlobalConfigs.END_FILE : GlobalConfigs.KEEP_FILE ) ) );
+            if (length > GlobalConfigs.BUFFER_SIZE){
+                int count = 0;
+                byte[] byteArray = new byte[GlobalConfigs.BUFFER_SIZE];
+                while (count != length) {
+                    count += bis.read(byteArray);
+                    putFile(file.getName(),byteArray, ( count > GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.KEEP_FILE :
+                            ( count == GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.START_FILE : GlobalConfigs.END_FILE ) ) );
+                    send();
+                }
+            }else {
+                putFile(file.getName(), bis.readAllBytes(), GlobalConfigs.ALL_FILE);
                 send();
             }
             bis.close();
