@@ -1,6 +1,6 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.pojos.Info;
+import co.edu.uptc.pojos.Info1;
 
 import java.awt.*;
 
@@ -37,7 +37,7 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public Info getInformation() {
+    public Info1 getInformation() {
         if (modelServer!=null)
             return modelServer.getInformation();
         else if (modelClient != null)

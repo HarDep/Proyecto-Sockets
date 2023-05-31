@@ -2,7 +2,7 @@ package co.edu.uptc.model;
 
 import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.pojos.FigureInformation;
-import co.edu.uptc.pojos.Info;
+import co.edu.uptc.pojos.Info1;
 import co.edu.uptc.pojos.PanelInformation;
 import co.edu.uptc.presenter.Contract;
 
@@ -11,14 +11,14 @@ import java.awt.*;
 public class ModelServer implements Contract.ModelServer {
     Contract.Presenter presenter;
     private final Rectangle rectangle;
-    private final Info info;
+    private final Info1 info1;
     boolean isRunning = true;
     private Server server;
 
     public ModelServer() {
         this.rectangle = new Rectangle(GlobalConfigs.RECTANGLE_X,GlobalConfigs.RECTANGLE_Y,
                 GlobalConfigs.RECTANGLE_WIDTH,GlobalConfigs.RECTANGLE_HEIGHT);
-        this.info = new Info(new FigureInformation(rectangle,GlobalConfigs.RECTANGLE_COLOR)
+        this.info1 = new Info1(new FigureInformation(rectangle,GlobalConfigs.RECTANGLE_COLOR)
                 ,new PanelInformation(GlobalConfigs.PANEL_COLOR));
     }
 
@@ -39,8 +39,8 @@ public class ModelServer implements Contract.ModelServer {
     }
 
     @Override
-    public Info getInformation() {
-        return info;
+    public Info1 getInformation() {
+        return info1;
     }
 
     @Override

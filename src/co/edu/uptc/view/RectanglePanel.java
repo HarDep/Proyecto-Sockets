@@ -1,8 +1,7 @@
 package co.edu.uptc.view;
 
 
-import co.edu.uptc.pojos.FigureInformation;
-import co.edu.uptc.pojos.Info;
+import co.edu.uptc.pojos.Info1;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +10,6 @@ import java.awt.event.MouseEvent;
 
 public class RectanglePanel extends JPanel {
     private final DashBoard dashBoard;
-    private Rectangle rectangle;
-    private Info info;
 
     public RectanglePanel(DashBoard dashBoard) {
         this.dashBoard = dashBoard;
@@ -25,15 +22,10 @@ public class RectanglePanel extends JPanel {
         super.paint(g);
         Graphics2D graphics2D = (Graphics2D) g;
         if (dashBoard.presenter != null) {
-            info = dashBoard.presenter.getInformation();
-            if (info!=null){
-                setBackground(new Color(info.getPanelInformation().getColor()));
-                graphics2D.setColor(new Color(info.getFigureInformation().getColor()));
-                graphics2D.draw(info.getFigureInformation().getRectangle());
-            }else {
-                rectangle = dashBoard.presenter.getSquare();
-                graphics2D.draw(rectangle);
-            }
+            Info1 info1 = dashBoard.presenter.getInformation();
+            setBackground(new Color(info1.getPanelInformation().getColor()));
+            graphics2D.setColor(new Color(info1.getFigureInformation().getColor()));
+            graphics2D.draw(info1.getFigureInformation().getRectangle());
         }
     }
 

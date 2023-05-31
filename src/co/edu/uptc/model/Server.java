@@ -1,7 +1,8 @@
 package co.edu.uptc.model;
 
+import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.pojos.FigureInformation2;
-import co.edu.uptc.pojos.Info;
+import co.edu.uptc.pojos.Info1;
 import co.edu.uptc.pojos.Info2;
 import com.google.gson.Gson;
 
@@ -20,7 +21,6 @@ public class Server {
     ModelServer model;
     private final List<Socket> sockets;
     private boolean isRemoved = false;
-    boolean isInfoRectangleUnit = true;
 
     public Server(String host, int port, ModelServer model) {
         this.model = model;
@@ -42,20 +42,23 @@ public class Server {
     }
     public void send(){
         if (!sockets.isEmpty()){
-            Info inf = model.getInformation();
+            Info1 inf = model.getInformation();
             String info;
-
-            if (isInfoRectangleUnit){
-                Rectangle rectangle = inf.getFigureInformation().getRectangle();
-                int x = rectangle.x << 22;
-                int y = rectangle.y << 12;
-                int w = rectangle.width << 6;
-                int h = rectangle.height;
-                int num = x + y + w + h;
-                info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
-                        inf.getPanelInformation()));
-            }else
-                info = new Gson().toJson(inf);
+            switch (GlobalConfigs.infoMode){
+                case 1 -> info = new Gson().toJson(inf);
+                case 2 ->{
+                    Rectangle rectangle = inf.getFigureInformation().getRectangle();
+                    int x = rectangle.x << 22;
+                    int y = rectangle.y << 12;
+                    int w = rectangle.width << 6;
+                    int h = rectangle.height;
+                    int num = x + y + w + h;
+                    info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
+                            inf.getPanelInformation()));
+                }
+                case 3 -> info = "";
+                default -> info = new Gson().toJson(inf.getFigureInformation().getRectangle());
+            }
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {

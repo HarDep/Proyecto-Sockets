@@ -12,4 +12,5 @@ public class GlobalConfigs {
     public static final int RECTANGLE_HEIGHT = 60;
     public static final Dimension FRAME_DIMENSION = new Dimension(700,700);
     public static final String TITLE = "Sockets";
+    public static int infoMode = 1;
 }

@@ -4,7 +4,6 @@ import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.presenter.Contract;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 

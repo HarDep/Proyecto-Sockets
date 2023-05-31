@@ -1,7 +1,5 @@
 package co.edu.uptc.pojos;
 
-import java.awt.*;
-
 public class FigureInformation2 {
     private int rectangle;
     private int Color;

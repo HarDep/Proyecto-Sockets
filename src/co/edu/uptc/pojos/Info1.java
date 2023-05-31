@@ -1,10 +1,10 @@
 package co.edu.uptc.pojos;
 
-public class Info {
+public class Info1 {
     private FigureInformation figureInformation;
     private PanelInformation panelInformation;
 
-    public Info(FigureInformation figureInformation, PanelInformation panelInformation) {
+    public Info1(FigureInformation figureInformation, PanelInformation panelInformation) {
         this.figureInformation = figureInformation;
         this.panelInformation = panelInformation;
     }
