@@ -86,7 +86,7 @@ public class Server {
                     Socket socket = connection.serverSocket.accept();
                     synchronized (sockets) {
                         sockets.add(socket);
-                        System.out.println(sockets.size());
+                        System.out.println("numero de clientes: "+sockets.size());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -105,8 +105,8 @@ public class Server {
                 byte[] byteArray = new byte[GlobalConfigs.BUFFER_SIZE];
                 while (count != length) {
                     count += bis.read(byteArray);
-                    putFile(file.getName(),byteArray, ( count > GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.KEEP_FILE :
-                            ( count == GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.START_FILE : GlobalConfigs.END_FILE ) ) );
+                    putFile(file.getName(),byteArray, ( count == GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.START_FILE :
+                            ( count == length ? GlobalConfigs.END_FILE : GlobalConfigs.KEEP_FILE ) ) );
                     send();
                 }
             }else {
