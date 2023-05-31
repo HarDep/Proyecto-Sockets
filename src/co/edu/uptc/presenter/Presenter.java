@@ -3,6 +3,7 @@ package co.edu.uptc.presenter;
 import co.edu.uptc.pojos.Info1;
 
 import java.awt.*;
+import java.io.File;
 
 public class Presenter implements Contract.Presenter {
     private Contract.ModelServer modelServer;
@@ -24,16 +25,19 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public void moveSquare(int x, int y) {
-        if (modelServer != null)
-            modelServer.moveSquare(x, y);
+    public void setColorPanel(int color) {
+        modelServer.setColorPanel(color);
     }
 
     @Override
-    public Rectangle getSquare() {
+    public void setColorRectangle(int color) {
+        modelServer.setColorRectangle(color);
+    }
+
+    @Override
+    public void moveSquare(int x, int y) {
         if (modelServer != null)
-            return modelServer.getSquare();
-        return modelClient.getSquare();
+            modelServer.moveSquare(x, y);
     }
 
     @Override
@@ -68,7 +72,22 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
+    public void sendFile(File file) {
+        modelServer.sendFile(file);
+    }
+
+    @Override
     public void notifyWarning(String value) {
         view.notifyWarning(value);
+    }
+
+    @Override
+    public void notifyMessage(String value) {
+        view.notifyMessage(value);
+    }
+
+    @Override
+    public boolean notifySelection(String value) {
+        return view.notifySelection(value);
     }
 }

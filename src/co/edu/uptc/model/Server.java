@@ -1,15 +1,11 @@
 package co.edu.uptc.model;
 
 import co.edu.uptc.configs.GlobalConfigs;
-import co.edu.uptc.pojos.FigureInformation2;
-import co.edu.uptc.pojos.Info1;
-import co.edu.uptc.pojos.Info2;
+import co.edu.uptc.pojos.*;
 import com.google.gson.Gson;
 
 import java.awt.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +17,8 @@ public class Server {
     ModelServer model;
     private final List<Socket> sockets;
     private boolean isRemoved = false;
+    private Info1 inf;
+    private String info;
 
     public Server(String host, int port, ModelServer model) {
         this.model = model;
@@ -40,25 +38,28 @@ public class Server {
             e.printStackTrace();
         }
     }
+
+    public void putInfo(){
+        inf = model.getInformation();
+        switch (GlobalConfigs.infoMode){
+            case GlobalConfigs.MODE_INFO1 -> info = new Gson().toJson(inf);
+            case GlobalConfigs.MODE_INFO2 ->{
+                Rectangle rectangle = inf.getFigureInformation().getRectangle();
+                int x = rectangle.x << 22;
+                int y = rectangle.y << 12;
+                int w = rectangle.width << 6;
+                int h = rectangle.height;
+                int num = x + y + w + h;
+                info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
+                        inf.getPanelInformation()));
+            }
+            case GlobalConfigs.MODE_INFO3 -> putFile(null, null, GlobalConfigs.NO_FILE);
+            default -> info = new Gson().toJson(inf.getFigureInformation().getRectangle());
+        }
+    }
+
     public void send(){
         if (!sockets.isEmpty()){
-            Info1 inf = model.getInformation();
-            String info;
-            switch (GlobalConfigs.infoMode){
-                case 1 -> info = new Gson().toJson(inf);
-                case 2 ->{
-                    Rectangle rectangle = inf.getFigureInformation().getRectangle();
-                    int x = rectangle.x << 22;
-                    int y = rectangle.y << 12;
-                    int w = rectangle.width << 6;
-                    int h = rectangle.height;
-                    int num = x + y + w + h;
-                    info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
-                            inf.getPanelInformation()));
-                }
-                case 3 -> info = "";
-                default -> info = new Gson().toJson(inf.getFigureInformation().getRectangle());
-            }
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {
@@ -91,5 +92,30 @@ public class Server {
             }
         });
         thread.start();
+    }
+
+    public void sendFile(File file){
+        try {
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+            int count = 0;
+            int length = (int) file.length();
+            byte[] byteArray = new byte[1024];
+            while (count != length) {
+                count += bis.read(byteArray);
+                putFile(file.getName(),byteArray, ( count == 1024 ? GlobalConfigs.START_FILE :
+                        ( count == length ? GlobalConfigs.END_FILE : GlobalConfigs.KEEP_FILE ) ) );
+                send();
+            }
+            bis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void putFile(String fileName, byte[] data, int status){
+        inf = model.getInformation();
+        Info3 inf3 = new Info3(inf.getFigureInformation(),inf.getPanelInformation(),
+                new FileReading(fileName,data,status));
+        info = new Gson().toJson(inf3);
     }
 }

@@ -14,12 +14,12 @@ public class SocketsProject {
         if (isServer){
             modelServer = new ModelServer();
             presenter = new Presenter();
-            view = new DashBoard();
+            view = new DashBoard(isServer);
             createServerMVP();
         }else{
             modelClient = new ModelClient();
             presenter = new Presenter();
-            view = new DashBoard();
+            view = new DashBoard(isServer);
             createClientMVP();
         }
     }

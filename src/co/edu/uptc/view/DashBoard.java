@@ -4,17 +4,30 @@ import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.presenter.Contract;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class DashBoard extends JFrame implements Contract.View {
-    private final RectanglePanel rectanglePanel;
+    private RectanglePanel rectanglePanel;
     Contract.Presenter presenter;
+    private final boolean isServer;
 
-    public DashBoard() {
+    public DashBoard(boolean isServer) {
+        this.isServer = isServer;
         putConfigs();
+        createComponents();
+    }
+
+    private void createComponents() {
         rectanglePanel = new RectanglePanel(this);
-        add(rectanglePanel);
+        if (isServer && (GlobalConfigs.infoMode == GlobalConfigs.MODE_INFO2 ||
+                GlobalConfigs.infoMode == GlobalConfigs.MODE_INFO3)){
+            add(rectanglePanel, BorderLayout.CENTER);
+            SelectionPanel selectionPanel = new SelectionPanel(this);
+            add(selectionPanel,BorderLayout.WEST);
+        }else
+            add(rectanglePanel);
     }
 
     private void putConfigs() {
@@ -49,5 +62,16 @@ public class DashBoard extends JFrame implements Contract.View {
     @Override
     public void notifyWarning(String value) {
         JOptionPane.showMessageDialog(this,value,GlobalConfigs.TITLE,JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void notifyMessage(String value) {
+        JOptionPane.showMessageDialog(this,value);
+    }
+
+    @Override
+    public boolean notifySelection(String value) {
+        return JOptionPane.showConfirmDialog(this,value,"",JOptionPane.YES_NO_OPTION)
+                == JOptionPane.YES_OPTION;
     }
 }

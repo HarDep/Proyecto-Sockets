@@ -7,6 +7,7 @@ import co.edu.uptc.pojos.PanelInformation;
 import co.edu.uptc.presenter.Contract;
 
 import java.awt.*;
+import java.io.File;
 
 public class ModelServer implements Contract.ModelServer {
     Contract.Presenter presenter;
@@ -30,12 +31,22 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void moveSquare(int x, int y) {
         rectangle.setLocation(x,y);
+        server.putInfo();
         server.send();
     }
 
     @Override
-    public Rectangle getSquare() {
-        return (Rectangle) rectangle.clone();
+    public void setColorPanel(int color) {
+        this.info1.getPanelInformation().setColor(color);
+        server.putInfo();
+        server.send();
+    }
+
+    @Override
+    public void setColorRectangle(int color) {
+        this.info1.getFigureInformation().setColor(color);
+        server.putInfo();
+        server.send();
     }
 
     @Override
@@ -51,5 +62,10 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void start() {
         server = new Server("", GlobalConfigs.PORT,this);
+    }
+
+    @Override
+    public void sendFile(File file) {
+        server.sendFile(file);
     }
 }

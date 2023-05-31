@@ -30,11 +30,6 @@ public class ModelClient implements Contract.ModelClient {
     }
 
     @Override
-    public Rectangle getSquare() {
-        return (Rectangle) rectangle.clone();
-    }
-
-    @Override
     public Info1 getInformation() {
         return info1;
     }
