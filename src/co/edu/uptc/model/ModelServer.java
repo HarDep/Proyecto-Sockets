@@ -1,5 +1,6 @@
 package co.edu.uptc.model;
 
+import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.pojos.FigureInformation;
 import co.edu.uptc.pojos.Info;
 import co.edu.uptc.pojos.PanelInformation;
@@ -10,15 +11,15 @@ import java.awt.*;
 public class ModelServer implements Contract.ModelServer {
     Contract.Presenter presenter;
     private final Rectangle rectangle;
-    private Info info;
+    private final Info info;
     boolean isRunning = true;
     private Server server;
 
     public ModelServer() {
-        //solo se puede enviar w y h hasta 64 ya que solo son 6 bits
-        rectangle = new Rectangle(0,0,60,60);
-        this.info = new Info(new FigureInformation(rectangle,255)
-                ,new PanelInformation(0));
+        this.rectangle = new Rectangle(GlobalConfigs.RECTANGLE_X,GlobalConfigs.RECTANGLE_Y,
+                GlobalConfigs.RECTANGLE_WIDTH,GlobalConfigs.RECTANGLE_HEIGHT);
+        this.info = new Info(new FigureInformation(rectangle,GlobalConfigs.RECTANGLE_COLOR)
+                ,new PanelInformation(GlobalConfigs.PANEL_COLOR));
     }
 
     @Override
@@ -49,6 +50,6 @@ public class ModelServer implements Contract.ModelServer {
 
     @Override
     public void start() {
-        server = new Server("",1234,this);
+        server = new Server("", GlobalConfigs.PORT,this);
     }
 }

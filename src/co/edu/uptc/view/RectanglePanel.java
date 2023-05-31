@@ -24,7 +24,6 @@ public class RectanglePanel extends JPanel {
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D graphics2D = (Graphics2D) g;
-        //graphics2D.setColor(Color.RED);
         if (dashBoard.presenter != null) {
             info = dashBoard.presenter.getInformation();
             if (info!=null){

@@ -37,7 +37,7 @@ public class Server {
         try {
             connection.connect();
         } catch (IOException e) {
-            model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
     public void send(){
@@ -75,24 +75,18 @@ public class Server {
         }
     }
     public void connect(){
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                while (model.isRunning){
-                    try {
-                        Socket socket = connection.serverSocket.accept();
-                        synchronized (sockets) {
-                            sockets.add(socket);
-                        }
-                    } catch (Exception e) {
-                        model.presenter.notifyWarning("Error técnico + \n" + e.getMessage());
+        Thread thread = new Thread(() -> {
+            while (model.isRunning){
+                try {
+                    Socket socket = connection.serverSocket.accept();
+                    synchronized (sockets) {
+                        sockets.add(socket);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        };
+        });
         thread.start();
-        //thread.setPriority(Thread.MAX_PRIORITY);
-        //System.out.println(thread.getPriority());
-        //thread.setPriority(6);
     }
 }

@@ -4,13 +4,13 @@ import co.edu.uptc.model.ModelClient;
 import co.edu.uptc.model.ModelServer;
 import co.edu.uptc.view.DashBoard;
 
-public class Demo {
+public class SocketsProject {
     private Contract.ModelServer modelServer;
     private Contract.ModelClient modelClient;
     private final Contract.Presenter presenter;
     private final Contract.View view;
 
-    public Demo(boolean isServer) {
+    public SocketsProject(boolean isServer) {
         if (isServer){
             modelServer = new ModelServer();
             presenter = new Presenter();

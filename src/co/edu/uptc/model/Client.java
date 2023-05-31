@@ -34,14 +34,11 @@ public class Client {
     }
 
     public void receive(){
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                while (model.isRunning) {
-                    getInfo();
-                }
+        Thread thread = new Thread(() -> {
+            while (model.isRunning) {
+                getInfo();
             }
-        };
+        });
         thread.start();
     }
 
@@ -83,7 +80,7 @@ public class Client {
             try {
                 connection.connect();
             } catch (ConnectException e){
-                model.presenter.notifyWarning("No se pudo conectar al sevidor");
+                model.presenter.notifyWarning("No se pudo conectar al servidor");
             } catch (IOException e) {
                 e.printStackTrace();
             }

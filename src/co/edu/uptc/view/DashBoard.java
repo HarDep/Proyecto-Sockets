@@ -1,5 +1,6 @@
 package co.edu.uptc.view;
 
+import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.presenter.Contract;
 
 import javax.swing.*;
@@ -18,8 +19,8 @@ public class DashBoard extends JFrame implements Contract.View {
     }
 
     private void putConfigs() {
-        setTitle("Demo");
-        setSize(new Dimension(700,700));
+        setTitle(GlobalConfigs.TITLE);
+        setSize(GlobalConfigs.FRAME_DIMENSION);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         addComponentListener(new ComponentAdapter() {
@@ -48,6 +49,6 @@ public class DashBoard extends JFrame implements Contract.View {
 
     @Override
     public void notifyWarning(String value) {
-        JOptionPane.showMessageDialog(this,value,"Demo",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this,value,GlobalConfigs.TITLE,JOptionPane.WARNING_MESSAGE);
     }
 }

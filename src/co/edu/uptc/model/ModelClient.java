@@ -1,5 +1,6 @@
 package co.edu.uptc.model;
 
+import co.edu.uptc.configs.GlobalConfigs;
 import co.edu.uptc.pojos.FigureInformation;
 import co.edu.uptc.pojos.Info;
 import co.edu.uptc.pojos.PanelInformation;
@@ -11,17 +12,16 @@ import java.net.UnknownHostException;
 
 public class ModelClient implements Contract.ModelClient {
     Contract.Presenter presenter;
-    private Rectangle rectangle;
-    private Info info;
+    private final Rectangle rectangle;
+    private final Info info;
     private Client client;
     boolean isRunning = true;
 
     public ModelClient() {
-        this.rectangle = new Rectangle(0,0,60,60);
-        this.info = new Info(new FigureInformation(rectangle,255)
-                ,new PanelInformation(0));
-        //this.info = new Info(new FigureInformation(604391976,255)
-          //      ,new PanelInformation(0));
+        this.rectangle = new Rectangle(GlobalConfigs.RECTANGLE_X,GlobalConfigs.RECTANGLE_Y,
+                GlobalConfigs.RECTANGLE_WIDTH,GlobalConfigs.RECTANGLE_HEIGHT);
+        this.info = new Info(new FigureInformation(rectangle,GlobalConfigs.RECTANGLE_COLOR)
+                ,new PanelInformation(GlobalConfigs.PANEL_COLOR));
     }
 
     @Override
@@ -72,6 +72,6 @@ public class ModelClient implements Contract.ModelClient {
             System.err.print("error en local host");
             throw new RuntimeException(e);
         }
-        client = new Client(ip,1234,this);
+        client = new Client(ip, GlobalConfigs.PORT,this);
     }
 }
