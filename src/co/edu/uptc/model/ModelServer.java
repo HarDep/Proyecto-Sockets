@@ -38,6 +38,7 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void setColorPanel(int color) {
         this.info1.getPanelInformation().setColor(color);
+        presenter.paintInfo();
         server.putInfo();
         server.send();
     }
@@ -45,6 +46,7 @@ public class ModelServer implements Contract.ModelServer {
     @Override
     public void setColorRectangle(int color) {
         this.info1.getFigureInformation().setColor(color);
+        presenter.paintInfo();
         server.putInfo();
         server.send();
     }

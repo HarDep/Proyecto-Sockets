@@ -37,17 +37,19 @@ public class SelectionPanel extends JPanel {
     }
 
     private void changeRectColor() {
-        JColorChooser chooser = new JColorChooser();
-        chooser.setVisible(true);
-        if (chooser.getColor() != null)
-            dashBoard.presenter.setColorRectangle(chooser.getColor().getRGB());
+        JColorChooser colorChooser = new JColorChooser();
+        int resultado = JOptionPane.showConfirmDialog(dashBoard, colorChooser,
+                "Selecciona un color", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (resultado == JOptionPane.OK_OPTION && colorChooser.getColor()!= null)
+            dashBoard.presenter.setColorRectangle(colorChooser.getColor().getRGB());
     }
 
     private void changeColor() {
-        JColorChooser chooser = new JColorChooser();
-        chooser.setVisible(true);
-        if (chooser.getColor() != null)
-            dashBoard.presenter.setColorPanel(chooser.getColor().getRGB());
+        JColorChooser colorChooser = new JColorChooser();
+        int resultado = JOptionPane.showConfirmDialog(dashBoard, colorChooser,
+                "Selecciona un color", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (resultado == JOptionPane.OK_OPTION && colorChooser.getColor()!= null)
+            dashBoard.presenter.setColorPanel(colorChooser.getColor().getRGB());
     }
 
     private void sendFile() {
