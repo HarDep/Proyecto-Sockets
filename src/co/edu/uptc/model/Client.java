@@ -101,8 +101,10 @@ public class Client {
                 if (fileReading.getStatus() == GlobalConfigs.START_FILE)
                     bos = new BufferedOutputStream(new FileOutputStream(fileReading.getFileName()));
                 bos.write(fileReading.getData(),0,fileReading.getData().length);
-                if (fileReading.getStatus() == GlobalConfigs.END_FILE)
+                if (fileReading.getStatus() == GlobalConfigs.END_FILE){
                     bos.close();
+                    model.presenter.notifyMessage("Se ha guardado el archivo" + fileReading.getFileName());
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
