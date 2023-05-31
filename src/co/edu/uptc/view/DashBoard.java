@@ -42,7 +42,7 @@ public class DashBoard extends JFrame implements Contract.View {
     }
 
     @Override
-    public void paintRectangle() {
+    public void paintInfo() {
         rectanglePanel.repaint();
     }
 

@@ -20,6 +20,7 @@ public class Server {
     ModelServer model;
     private final List<Socket> sockets;
     private boolean isRemoved = false;
+    boolean isInfoRectangleUnit = true;
 
     public Server(String host, int port, ModelServer model) {
         this.model = model;
@@ -42,17 +43,19 @@ public class Server {
     public void send(){
         if (!sockets.isEmpty()){
             Info inf = model.getInformation();
-            Rectangle rectangle = inf.getFigureInformation().getRectangle();
-            int x = rectangle.x << 22;
-            int y = rectangle.y << 12;
-            int w = rectangle.width << 6;
-            //System.out.println(Integer.toBinaryString(w) + "orr");
-            int h = rectangle.height;
-            //System.out.println(Integer.toBinaryString(h));
-            int num = x + y + w + h;
-            //System.out.println(Integer.toBinaryString(num) + "--ori");
-            String info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
-                    inf.getPanelInformation()));
+            String info;
+
+            if (isInfoRectangleUnit){
+                Rectangle rectangle = inf.getFigureInformation().getRectangle();
+                int x = rectangle.x << 22;
+                int y = rectangle.y << 12;
+                int w = rectangle.width << 6;
+                int h = rectangle.height;
+                int num = x + y + w + h;
+                info =new Gson().toJson(new Info2(new FigureInformation2(num,inf.getFigureInformation().getColor()),
+                        inf.getPanelInformation()));
+            }else
+                info = new Gson().toJson(inf);
             synchronized (sockets){
                 for (Socket socket:sockets) {
                     try {

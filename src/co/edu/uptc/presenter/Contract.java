@@ -1,6 +1,5 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.pojos.FigureInformation;
 import co.edu.uptc.pojos.Info;
 
 import java.awt.*;
@@ -18,9 +17,9 @@ public interface Contract {
         void setPresenter(Contract.Presenter presenter);
         Rectangle getSquare();
         Info getInformation();
-        void setRectangle(Rectangle rectangle);
-        void setInformation(Info info);
-        void paintRectangle();
+        void setRectangle(int x,int y, int w, int h);
+        void setInformation(int figColor, int panelColor);
+        void paintInfo();
         void terminate();
         void start();
     }
@@ -31,7 +30,7 @@ public interface Contract {
         void moveSquare(int x, int y);
         Rectangle getSquare();
         Info getInformation();
-        void paintRectangle();
+        void paintInfo();
         void start();
         void terminate();
         void notifyWarning(String value);
@@ -39,7 +38,7 @@ public interface Contract {
     interface View{
         void setPresenter(Contract.Presenter presenter);
         void start();
-        void paintRectangle();
+        void paintInfo();
         void notifyWarning(String value);
     }
 }

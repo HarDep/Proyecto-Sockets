@@ -1,6 +1,5 @@
 package co.edu.uptc.presenter;
 
-import co.edu.uptc.pojos.FigureInformation;
 import co.edu.uptc.pojos.Info;
 
 import java.awt.*;
@@ -47,8 +46,8 @@ public class Presenter implements Contract.Presenter {
     }
 
     @Override
-    public void paintRectangle() {
-        view.paintRectangle();
+    public void paintInfo() {
+        view.paintInfo();
     }
 
     @Override

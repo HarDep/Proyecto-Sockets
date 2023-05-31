@@ -29,14 +29,14 @@ public class Demo {
         presenter.setModelClient(modelClient);
         presenter.setView(view);
         view.setPresenter(presenter);
-        view.paintRectangle();
+        view.paintInfo();
     }
     private void createServerMVP() {
         modelServer.setPresenter(presenter);
         presenter.setModelServer(modelServer);
         presenter.setView(view);
         view.setPresenter(presenter);
-        view.paintRectangle();
+        view.paintInfo();
     }
 
     public void start(){

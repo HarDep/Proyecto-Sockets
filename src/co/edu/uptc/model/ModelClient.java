@@ -6,6 +6,8 @@ import co.edu.uptc.pojos.PanelInformation;
 import co.edu.uptc.presenter.Contract;
 
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ModelClient implements Contract.ModelClient {
     Contract.Presenter presenter;
@@ -38,19 +40,22 @@ public class ModelClient implements Contract.ModelClient {
     }
 
     @Override
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
+    public void setRectangle(int x,int y, int w, int h) {
+        this.rectangle.setLocation(x,y);
+        this.rectangle.width = w;
+        this.rectangle.height = h;
     }
 
     @Override
-    public void setInformation(Info info) {
-        this.info = info;
+    public void setInformation(int figColor, int panelColor) {
+        this.info.getFigureInformation().setColor(figColor);
+        this.info.getPanelInformation().setColor(panelColor);
     }
 
     @Override
-    public void paintRectangle() {
+    public void paintInfo() {
         if (presenter != null)
-            presenter.paintRectangle();
+            presenter.paintInfo();
     }
 
     @Override
@@ -60,7 +65,13 @@ public class ModelClient implements Contract.ModelClient {
 
     @Override
     public void start() {
-        //client = new Client("10.4.74.189",1234,this);
-        client = new Client("192.168.1.14",1234,this);
+        String ip;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            System.err.print("error en local host");
+            throw new RuntimeException(e);
+        }
+        client = new Client(ip,1234,this);
     }
 }
