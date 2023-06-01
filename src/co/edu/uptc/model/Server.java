@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,18 +63,24 @@ public class Server {
         if (!sockets.isEmpty()){
             synchronized (sockets){
                 for (Socket socket:sockets) {
-                    try {
-                        System.out.println(info);
+                    try { // info no debe tener mas de aprox 65000 bytes por envio
+                        //System.out.println("11- "+info.getBytes().length);
+                        //System.out.println(info);
                         dataOutputStream = new DataOutputStream(socket.getOutputStream());
                         dataOutputStream.writeUTF(info);
-                    } catch (IOException e) {
+                    } catch (SocketException e){
+                        model.presenter.notifyWarning("Se ha desconectado un cliente");
                         sockets.remove(socket);
                         isRemoved = true;
                         break;
+                    } catch (IOException e) {
+                        //System.out.println("22- "+info.getBytes().length);
+                        System.err.println("La cantidad de bytes enviadas es muy grande");
                     }
                 }
             }
-        }
+        }else
+            model.presenter.notifyWarning("No hay clientes conectados");
         if (isRemoved){
             isRemoved = false;
             send();
@@ -103,7 +110,7 @@ public class Server {
             if (length > GlobalConfigs.BUFFER_SIZE){
                 int count = 0;
                 byte[] byteArray = new byte[GlobalConfigs.BUFFER_SIZE];
-                while (count != length) {
+                while (count != length && sockets.size() > 0) {
                     count += bis.read(byteArray);
                     putFile(file.getName(),byteArray, ( count == GlobalConfigs.BUFFER_SIZE ? GlobalConfigs.START_FILE :
                             ( count == length ? GlobalConfigs.END_FILE : GlobalConfigs.KEEP_FILE ) ) );

@@ -22,7 +22,7 @@ public class DashBoard extends JFrame implements Contract.View {
     private void createComponents() {
         rectanglePanel = new RectanglePanel(this);
         if (isServer && (GlobalConfigs.infoMode == GlobalConfigs.MODE_INFO2 ||
-                GlobalConfigs.infoMode == GlobalConfigs.MODE_INFO3)){
+        GlobalConfigs.infoMode == GlobalConfigs.MODE_INFO3 || GlobalConfigs.infoMode == GlobalConfigs.MODE_INFO1)){
             add(rectanglePanel, BorderLayout.CENTER);
             SelectionPanel selectionPanel = new SelectionPanel(this);
             add(selectionPanel,BorderLayout.WEST);
