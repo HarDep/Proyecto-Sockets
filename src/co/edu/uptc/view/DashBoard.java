@@ -1,6 +1,7 @@
 package co.edu.uptc.view;
 
 import co.edu.uptc.configs.GlobalConfigs;
+import co.edu.uptc.pojos.FrameInformation;
 import co.edu.uptc.presenter.Contract;
 
 import javax.swing.*;
@@ -73,5 +74,11 @@ public class DashBoard extends JFrame implements Contract.View {
     public boolean notifySelection(String value) {
         return JOptionPane.showConfirmDialog(this,value,"",JOptionPane.YES_NO_OPTION)
                 == JOptionPane.YES_OPTION;
+    }
+
+    @Override
+    public void setFrameInfo(FrameInformation frameInformation) {
+        setSize(new Dimension(frameInformation.getWidth(),frameInformation.getHeight()));
+        setLocation(new Point(frameInformation.getX(), frameInformation.getY()));
     }
 }

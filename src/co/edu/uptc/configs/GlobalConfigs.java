@@ -12,10 +12,11 @@ public class GlobalConfigs {
     public static final int RECTANGLE_HEIGHT = 60;
     public static final Dimension FRAME_DIMENSION = new Dimension(700,700);
     public static final String TITLE = "Sockets";
-    public static int infoMode = 3;
+    public static int infoMode = 4;
     public static final int MODE_INFO1 = 1;
     public static final int MODE_INFO2 = 2;
     public static final int MODE_INFO3 = 3;
+    public static final int MODE_PA = 4;
     public static final int NO_FILE = 0;
     public static final int START_FILE = 1;
     public static final int KEEP_FILE = 2;

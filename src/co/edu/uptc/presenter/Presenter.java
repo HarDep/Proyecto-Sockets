@@ -1,5 +1,6 @@
 package co.edu.uptc.presenter;
 
+import co.edu.uptc.pojos.FrameInformation;
 import co.edu.uptc.pojos.Info1;
 
 import java.awt.*;
@@ -89,5 +90,10 @@ public class Presenter implements Contract.Presenter {
     @Override
     public boolean notifySelection(String value) {
         return view.notifySelection(value);
+    }
+
+    @Override
+    public void setFrameInfo(FrameInformation frameInformation) {
+        view.setFrameInfo(frameInformation);
     }
 }

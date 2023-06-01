@@ -25,7 +25,7 @@ public class RectanglePanel extends JPanel {
             Info1 info1 = dashBoard.presenter.getInformation();
             setBackground(new Color(info1.getPanelInformation().getColor()));
             graphics2D.setColor(new Color(info1.getFigureInformation().getColor()));
-            graphics2D.draw(info1.getFigureInformation().getRectangle());
+            graphics2D.fill(info1.getFigureInformation().getRectangle());
         }
     }
 

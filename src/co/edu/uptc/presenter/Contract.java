@@ -1,5 +1,6 @@
 package co.edu.uptc.presenter;
 
+import co.edu.uptc.pojos.FrameInformation;
 import co.edu.uptc.pojos.Info1;
 
 import java.io.File;
@@ -39,6 +40,7 @@ public interface Contract {
         void notifyWarning(String value);
         void notifyMessage(String value);
         boolean notifySelection(String value);
+        void setFrameInfo(FrameInformation frameInformation);
     }
     interface View{
         void setPresenter(Contract.Presenter presenter);
@@ -47,5 +49,6 @@ public interface Contract {
         void notifyWarning(String value);
         void notifyMessage(String value);
         boolean notifySelection(String value);
+        void setFrameInfo(FrameInformation frameInformation);
     }
 }

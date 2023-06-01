@@ -60,13 +60,14 @@ public class ModelClient implements Contract.ModelClient {
 
     @Override
     public void start() {
-        String ip;
+        /*String ip;
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             System.err.print("error en local host");
             throw new RuntimeException(e);
         }
-        client = new Client(ip, GlobalConfigs.PORT,this);
+        client = new Client(ip, GlobalConfigs.PORT,this);*/
+        client = new Client("10.4.74.239", GlobalConfigs.PORT,this);
     }
 }

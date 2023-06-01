@@ -1,10 +1,7 @@
 package co.edu.uptc.model;
 
 import co.edu.uptc.configs.GlobalConfigs;
-import co.edu.uptc.pojos.FileReading;
-import co.edu.uptc.pojos.Info1;
-import co.edu.uptc.pojos.Info2;
-import co.edu.uptc.pojos.Info3;
+import co.edu.uptc.pojos.*;
 import com.google.gson.Gson;
 
 import java.awt.*;
@@ -72,6 +69,17 @@ public class Client {
                     Rectangle rectangle = inf.getFigureInformation().getRectangle();
                     model.setRectangle(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
                     model.setInformation(inf.getFigureInformation().getColor(),inf.getPanelInformation().getColor());
+                }
+                case GlobalConfigs.MODE_PA -> {
+                    Info4 inf = new Gson().fromJson(info, Info4.class);
+                    int num = inf.getFigureInformation().getRectangle();
+                    int x = num >>> 22;
+                    int y = (num >>> 12) - (x << 10);
+                    int w = (num >>> 6) - ((num >>> 12) << 6);
+                    int h = num - ((num >>> 6) << 6);
+                    model.setRectangle(x,y,w,h);
+                    model.setInformation(inf.getFigureInformation().getColor(), inf.getPanelInformation().getColor());
+                    model.presenter.setFrameInfo(inf.getFrameInformation());
                 }
                 default -> {
                     Rectangle rectangle = new Gson().fromJson(info,Rectangle.class);
